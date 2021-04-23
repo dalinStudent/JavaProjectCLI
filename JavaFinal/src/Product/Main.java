@@ -80,7 +80,7 @@ public class Main {
 		System.out.println("5. Find the product record");
 		System.out.println("6. Search the product record");
 		System.out.println("0. Exit the system...");
-		System.out.print("\nEnter Option (0-5): ");
+		System.out.print("\nEnter Option (0-6): ");
 	}
 	
 }
