@@ -86,8 +86,12 @@ public class ProductManager {
     public void updateProduct(Product student) {
 		
 	}
-    public void deleteProduct(int id) {
-		
+    public void deleteProduct(int id) throws ClassNotFoundException, SQLException {
+    	connection = ConnectionUtil.getMyConnection();
+    	String sql = "DELETE FROM tbl_products WHERE product_id=" + id;
+    	pstmst = connection.prepareStatement(sql);
+    	result = pstmst.executeQuery();
+    	System.out.println(">> Delete product successfully <<");
 	}
     
 }

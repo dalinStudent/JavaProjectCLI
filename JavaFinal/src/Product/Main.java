@@ -40,15 +40,18 @@ public class Main {
 				case 4: 
 					System.out.println("");
 					System.out.println(" == DELETE PRODUCT RECORD == ");
-					
-					
+					Scanner inputDelete = new Scanner(System.in);
+					System.out.println("");
+				    System.out.print("Input product ID: ");
+				    int idDelete = inputDelete.nextInt();
+					productManager.deleteProduct(idDelete);
 					break;
 				case 5: 
 					System.out.println("");
 					System.out.println(" == FIND PRODUCT RECORD == ");
 					Scanner input = new Scanner(System.in);
 					System.out.println("");
-				    System.out.print("Input customer ID: ");
+				    System.out.print("Input product ID: ");
 				    int id = input.nextInt();
 					if(productManager.findProduct(id) != null) {
 						System.out.println(productManager.findProduct(id));
