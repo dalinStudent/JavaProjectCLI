@@ -1,14 +1,16 @@
 package Product;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
 
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Scanner userInput = new Scanner(System.in);
 		int option;
 		char userPress;
 		showMeun();
+		ProductManager productManager = new ProductManager();
 		do {
 			
 			option = userInput.nextInt();
@@ -17,7 +19,7 @@ public class Main {
 				case 1: 
 					System.out.println("");
 					System.out.println(" == LIST OF ALL PRODUCT RECORD == ");
-						ProductManager productManager = new ProductManager();
+					
 						List<Product> productList = new ArrayList<Product>();
 						productList = productManager.getAllProduct();
 						for(Product product:productList) {
@@ -44,7 +46,15 @@ public class Main {
 				case 5: 
 					System.out.println("");
 					System.out.println(" == FIND PRODUCT RECORD == ");
-					
+					Scanner input = new Scanner(System.in);
+					System.out.println("");
+				    System.out.print("Input customer ID: ");
+				    int id = input.nextInt();
+					if(productManager.findProduct(id) != null) {
+						System.out.println(productManager.findProduct(id));
+					} else {
+						System.out.println("Product record not found!");
+					}
 					
 					break;
 				case 6: 
@@ -59,7 +69,7 @@ public class Main {
 					break;
 			}
 			System.out.println("");
-			System.out.println("Press anykey to continue<Y/y>...");
+			System.out.print("Press anykey to continue<Y/y>...");
 			userPress = userInput.next().charAt(0); 
 		    if (userPress == 'Y' || userPress == 'y') {
 		    	showMeun();
