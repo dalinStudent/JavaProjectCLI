@@ -56,7 +56,6 @@ public class Login {
 			
 			switch(option) {
 				case 1: 
-					
 					System.out.println("\n == LIST OF ALL PRODUCT RECORD == ");
 						List<Product> productList = new ArrayList<Product>();
 						productList = productManager.getAllProduct();
@@ -66,8 +65,19 @@ public class Login {
 					break;
 				case 2: 
 					System.out.println("\n == ADD NEW PRODUCT RECORD == ");
-					
-					
+					Scanner userCreate = new Scanner(System.in);
+				    
+					System.out.print("Input product name: ");
+					String name = userCreate.nextLine();
+					System.out.print("Input product price: ");
+					String price = userCreate.nextLine();
+					System.out.print("Input product category: ");
+					String category = userCreate.nextLine();
+					System.out.print("Input product quantity: ");
+					int quantity = userCreate.nextInt();
+					System.out.print("Input user id: ");
+					int userId = userCreate.nextInt();
+					productManager.addProduct(userId, name, quantity, price, category);
 					break;
 				case 3: 
 					System.out.println("\n == UPDATE PRODUCT RECORD == ");

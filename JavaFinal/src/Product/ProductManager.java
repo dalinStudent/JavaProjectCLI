@@ -9,7 +9,6 @@ public class ProductManager {
 	static Statement insertStatement = null;
 	static Statement selectStatement = null;
 	static Statement updateStatement = null;
-	static Statement deleteStatement = null;
 	static ResultSet result = null;
 	static PreparedStatement pstmst;
 	public List<Product> getAllProduct() throws ClassNotFoundException {
@@ -80,8 +79,23 @@ public class ProductManager {
 		return product;
 	}
 	
-	public void addProduct(Product product) throws ClassNotFoundException {
-		
+	public void addProduct(int userId, String name, int quantity, String price, String category) throws ClassNotFoundException, SQLException {
+		connection = ConnectionUtil.getMyConnection();
+		String sql = "INSERT INTO tbl_products (user_id, name, quantity, price, category) VALUES(?,?,?,?,?)";
+		pstmst = connection.prepareStatement(sql);
+		pstmst.setInt(1, userId);
+	    pstmst.setString(2, name);
+	    pstmst.setInt(3, quantity);
+	    pstmst.setString(4, price);
+	    pstmst.setString(5, category);
+
+		 int data = pstmst.executeUpdate();
+	      if(data!=0){
+	        System.out.println("\n>> Add product successfully <<"); 
+	      }
+	      else{
+	        System.out.println("\\n>> Add product unsuccessfull <<");
+	      }
 	}
     public void updateProduct(Product product) {
 		
