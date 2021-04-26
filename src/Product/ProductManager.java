@@ -45,67 +45,37 @@ public class ProductManager {
 			return productList;
 	}
 	
-	public Product getProduct(int id) {
-		return null;
-	}
-	
-// create product
-//	public void addProduct() throws ClassNotFoundException, SQLException {
-//		Scanner input = new Scanner(System.in);
-//		try{
-//			System.out.println("Enter product name:");
-//			String name = input.next();
-//			System.out.println("Enter product quantity:");
-//			int quantity = input.nextInt();
-//			System.out.println("Enter product price:");
-//			String price = input.next();
-//			System.out.println("Enter product category:");
-//			String category = input.next();
-//			System.out.println("Enter product public_date:");
-//			String public_date = input.next();
-//			System.out.println("Enter product expire_date:");
-//			String expire_date = input.next();
-//
-//			connection = ConnectionUtil.getMyConnection();;
-//			pstmst = connection.prepareStatement ("INSERT INTO tbl_products (name,quantity,price,category,public_date,expire_date) VALUES(?,?,?,?,?,?)");
-//			pstmst.setString(1,name);
-//			pstmst.setInt(2, quantity);
-//			pstmst.setString(3, price);
-//			pstmst.setString(4, category);
-//			pstmst.setString(5, public_date);
-//			pstmst.setString(6, expire_date);
-//			 int i = pstmst.executeUpdate();
-//		      if(i!=0){
-//		        System.out.println("add product successfull"); 
-//		      }
-//		      else{
-//		        System.out.println("failed to add");
-//		      }
-//		}catch (Exception e){
-//		     System.out.println(e);
-//	    }
-//
-//	}
+
 	
 	// create product
-	public void addProduct(String name_pro,int quantity_pro,String price_pro,String category_pro,String public_date_pro,String expire_date_pro) throws ClassNotFoundException { 
-
-		try {
+	public void addProduct(Product product) throws ClassNotFoundException, SQLException {
+		try{
 			connection = ConnectionUtil.getMyConnection();
-		    String sql =  "INSERT INTO tbl_products (name,quantity,price,category,public_date,expire_date) VALUES('"+name_pro+"',"+quantity_pro+",'"+price_pro+"','"+category_pro+"','"+public_date_pro+"','"+expire_date_pro+"')";
-		    pstmst = connection.prepareStatement(sql);
-			 int data = pstmst.executeUpdate();
-		      if(data!=0){
-		        System.out.println("add product successfull"); 
-		      }
-		      else{
-		        System.out.println("failed to add");
-		      }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			String sql = "INSERT INTO tbl_products (user_id,name,quantity,price,category,public_date,expire_date) VALUES(?,?,?,?,?,?,?)";
+			pstmst = connection.prepareStatement (sql);
+		    pstmst.setInt(1, product.getUserId());
+		    pstmst.setString(2, product.getName());
+		    pstmst.setInt(3, product.getQuantity());
+		    pstmst.setString(4, product.getPrice());
+		    pstmst.setString(5, product.getCategory());
+		    pstmst.setString(6, product.getPublicDate());
+		    pstmst.setString(7, product.getExpireDate());
+		    int data = pstmst.executeUpdate();
+		    if(data!=0){
+		    	System.out.println("\n>> created product successfully <<"); 
+		    }
+		    else{
+		    	System.out.println("\\n>> create product unsuccessfull <<");
+		    }
+		}catch (Exception e){
+		     System.out.println(e);
+	    }
+
 	}
 	
+	
+	
+	// search product by name
 	public List<Product> searchProduct(String name_pro) throws ClassNotFoundException { 
 		List<Product> productSearch = new ArrayList<Product>();
 		try {
@@ -134,5 +104,66 @@ public class ProductManager {
 
 		return productSearch;
 	}
+	
+
+	
+	// update product
+	public void updateProduct(Product product) throws ClassNotFoundException { 
+
+		try {
+				connection = ConnectionUtil.getMyConnection();
+				String sql = "UPDATE tbl_products SET user_id=?, name=?, quantity=?, price=?, category=?, public_date=?, expire_date=?  WHERE product_id=?";
+				pstmst = connection.prepareStatement(sql);
+			    pstmst.setInt(1, product.getUserId());
+			    pstmst.setString(2, product.getName());
+			    pstmst.setInt(3, product.getQuantity());
+			    pstmst.setString(4, product.getPrice());
+			    pstmst.setString(5, product.getCategory());
+			    pstmst.setString(6, product.getPublicDate());
+			    pstmst.setString(7, product.getExpireDate());
+				pstmst.setInt(8, product.getProductId());
+			    int data = pstmst.executeUpdate();
+			    if(data!=0){
+			    	System.out.println("\n>> update product successfully <<"); 
+			    }
+			    else{
+			    	System.out.println("\\n>> update product unsuccessfull <<");
+			    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
