@@ -80,17 +80,17 @@ public class ProductManager {
 		return product;
 	}
 	
-	public void addProduct(Product student) {
+	public void addProduct(Product product) throws ClassNotFoundException {
 		
 	}
-    public void updateProduct(Product student) {
+    public void updateProduct(Product product) {
 		
 	}
     public void deleteProduct(int id) throws ClassNotFoundException, SQLException {
     	connection = ConnectionUtil.getMyConnection();
     	String sql = "DELETE FROM tbl_products WHERE product_id=" + id;
     	pstmst = connection.prepareStatement(sql);
-    	result = pstmst.executeQuery();
+    	int rowEffect = pstmst.executeUpdate();
     	System.out.println(">> Delete product successfully <<");
 	}
     

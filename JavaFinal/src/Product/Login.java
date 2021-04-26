@@ -9,22 +9,23 @@ public class Login {
 	static ResultSet result;
 	static PreparedStatement pstmst;
 	
-	ProductManager productManager = new ProductManager();	
+	static ProductManager productManager = new ProductManager();	
+	static UserManager userManager = new UserManager();
+	static Scanner userInput = new Scanner(System.in);
+	static char userPress;
 	
-	public void login() throws ClassNotFoundException {
+	public static void login() throws ClassNotFoundException {
 		try {
 			connection = ConnectionUtil.getMyConnection();
-
-            Scanner scan = new Scanner(System.in);
             System.out.println("==================================");
             System.out.println("WELCOME TO STOCK MANAGEMENT SYSTEM");
             System.out.println("==================================");
+            Scanner scanner = new Scanner(System.in);
             System.out.print("\nEnter your Email : ");
-            String email = scan.nextLine();
-
+            String email = scanner.nextLine();
             System.out.print("\nEnter your Password : ");
-            String password = scan.nextLine();
-            System.out.println("\n================================");
+            String password = scanner.nextLine();
+            System.out.println("\n==================================");
             
 			selectStatement = connection.createStatement();
 			result = selectStatement.executeQuery("SELECT * FROM tbl_users WHERE email='" + email + "'" + " AND password = '" + password + "'");
@@ -33,7 +34,8 @@ public class Login {
             	 System.out.println("\n>> Logged in successfully! << ");
             	choidChoos();
             } else {
-                System.out.println("Wrong username or password");
+                System.out.println(">> Incorrect username or password <<");
+                registerUser();
             }
 
             result.close();
@@ -45,11 +47,9 @@ public class Login {
         }
 	}
 	
-	public void choidChoos() throws ClassNotFoundException {
-		Scanner userInput = new Scanner(System.in);
-		int option;
-		char userPress;
+	public static void choidChoos() throws ClassNotFoundException, SQLException {
 		showMeun();
+		int option;
 		do {
 			
 			option = userInput.nextInt();
@@ -67,6 +67,7 @@ public class Login {
 				case 2: 
 					System.out.println("\n == ADD NEW PRODUCT RECORD == ");
 					
+					
 					break;
 				case 3: 
 					System.out.println("\n == UPDATE PRODUCT RECORD == ");
@@ -75,15 +76,16 @@ public class Login {
 					break;
 				case 4: 
 					System.out.println("\n == DELETE PRODUCT RECORD == ");
-					
-					
+					System.out.print("\nInput product ID: ");
+					int delete = userInput.nextInt();
+					productManager.deleteProduct(delete);
 					break;
 				case 5: 
 					System.out.println("\n == FIND PRODUCT RECORD == ");
-					Scanner input = new Scanner(System.in);
 				    System.out.print("\nInput product ID: ");
-				    int id = input.nextInt();
+				    int id = userInput.nextInt();
 					if(productManager.findProduct(id) != null) {
+						System.out.println("\n>> Product found! <<");
 						System.out.println(productManager.findProduct(id));
 					} else {
 						System.out.println("\nProduct record not found!");
@@ -109,8 +111,39 @@ public class Login {
 		} while(option != 0);
 	}
 	
+	public static void registerUser() throws ClassNotFoundException {
+		System.out.println("1. Create an new account?");
+		System.out.println("2. Back to login");
+		System.out.print("\nEnter your choice: ");
+		int choice = userInput.nextInt();
+		do {
+				switch(choice) {
+					case 1 : 
+						System.out.println("\n == REGISTER A NEW ACCOUNT==");
+						Scanner user = new Scanner(System.in);
+						System.out.print("Input the first name: ");
+						String firstName = user.nextLine();
+						System.out.print("Input the last name: ");
+						String lastName = user.nextLine();
+						System.out.print("Input the province: ");
+						String province = user.nextLine();
+						System.out.print("Input the phone number: ");
+						String phone = user.nextLine();
+						System.out.print("Input the email: ");
+						String email = user.nextLine();
+						System.out.print("Input the password: ");
+						String password = user.nextLine();
+						userManager.addUser(firstName,lastName,province,phone,email,password);
+						break;
+					case 2 : 
+						login();
+						break;
+				}
+		} while(choice!=0);
+	}
+	
 	public static void showMeun() {
-		System.out.println("\n=================================");
+		System.out.println("\n==================================");
 		System.out.println("      Main Menu 	");
 		System.out.println("==================================");
 		System.out.println("1. List all product record");

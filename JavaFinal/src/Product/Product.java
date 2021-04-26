@@ -105,7 +105,9 @@ public class Product {
 	public String toString() {
 		return "\n ----------------------------------------------------------------------------------------|"+
 			      "\n ProductId  UserId   Quantity  Price   Category   Public Date   Expire Date|"+
-			      "\n ----------------------------------------------------------------------------------------| \n|" +productId+ "          " +userId+"         "+quantity+"       "+price+"      "+category+"      "+publicDate+"      "+expireDate;
+			      "\n ----------------------------------------------------------------------------------------| "+
+			      "\n|"+productId+ "          " +userId+"         "+quantity+"       "+price+"      "+category+"      "+publicDate+"      "+expireDate +
+			       "\n ----------------------------------------------------------------------------------------|";
 			     
 	}
 	
