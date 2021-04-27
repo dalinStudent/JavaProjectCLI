@@ -93,8 +93,26 @@ public class ProductManager {
 	        System.out.println("\\n>> Add product unsuccessfull <<");
 	      }
 	}
-    public void updateProduct(Product product) {
-		
+    public void updateProduct(Product product) throws ClassNotFoundException {
+    	try {
+			connection = ConnectionUtil.getMyConnection();
+			String sql = "UPDATE tbl_products SET name=?, quantity=?, price=?, category=?  WHERE product_id=?";
+			pstmst = connection.prepareStatement(sql);
+		    pstmst.setString(1, product.getName());
+		    pstmst.setInt(2, product.getQuantity());
+		    pstmst.setString(3, product.getPrice());
+		    pstmst.setString(4, product.getCategory());
+			pstmst.setInt(5, product.getProductId());
+		    int data = pstmst.executeUpdate();
+		    if(data!=0){
+		    	System.out.println("\n>> Update product successfully <<"); 
+		    }
+		    else{
+		    	System.out.println("\\n>> Update product unsuccessfull <<");
+		    }
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
 	}
     public void deleteProduct(int id) throws ClassNotFoundException, SQLException {
     	connection = ConnectionUtil.getMyConnection();

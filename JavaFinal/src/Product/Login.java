@@ -11,6 +11,7 @@ public class Login {
 	
 	static ProductManager productManager = new ProductManager();	
 	static UserManager userManager = new UserManager();
+	static Product product = new Product();
 	static Scanner userInput = new Scanner(System.in);
 	static char userPress;
 	
@@ -64,9 +65,7 @@ public class Login {
 						}
 					break;
 				case 2: 
-					System.out.println("\n == ADD NEW PRODUCT RECORD == ");
-					Product product = new Product();
-					
+					System.out.println("\n == ADD NEW PRODUCT RECORD == ");			
 					Scanner userCreate = new Scanner(System.in);
 					System.out.print("\nInput user id: ");
 					int userId = userCreate.nextInt();
@@ -87,7 +86,22 @@ public class Login {
 					break;
 				case 3: 
 					System.out.println("\n == UPDATE PRODUCT RECORD == ");
-					
+					System.out.print("\nEnter your product id to update: ");
+				    int idProduct = userInput.nextInt();
+					System.out.print("Enter your new product name: ");
+					String nameProduct = userInput.next();
+					System.out.print("Enter your new product quantity: ");
+					int quantityProduct = userInput.nextInt();
+					System.out.print("Enter your new product price: ");
+					String priceProduct = userInput.next();
+					System.out.print("Enter your new product category: ");
+					String categoryProduct = userInput.next();
+						product.setProductId(idProduct);
+						product.setName(nameProduct);
+						product.setQuantity(quantityProduct);
+						product.setPrice(priceProduct);
+						product.setCategory(categoryProduct);
+					productManager.updateProduct(product);
 					
 					break;
 				case 4: 
