@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Login {
 	static Connection connection = null;
-	static Statement selectStatement = null;
 	static ResultSet result;
 	static PreparedStatement pstmst;
 	
@@ -21,16 +20,15 @@ public class Login {
             System.out.println("==================================");
             System.out.println("WELCOME TO STOCK MANAGEMENT SYSTEM");
             System.out.println("==================================");
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("\nEnter your Email : ");
-            String email = scanner.nextLine();
-            System.out.print("\nEnter your Password : ");
-            String password = scanner.nextLine();
+            	System.out.print("\nEnter your Email : ");
+            String email = userInput.next();
+            	System.out.print("\nEnter your Password : ");
+            String password = userInput.next();
             System.out.println("\n==================================");
-            
-			selectStatement = connection.createStatement();
-			result = selectStatement.executeQuery("SELECT * FROM tbl_users WHERE email='" + email + "'" + " AND password = '" + password + "'");
-
+			String sql =  "SELECT * FROM tbl_users WHERE email='" + email + "'" + " AND password = '" + password + "'";
+			pstmst = connection.prepareStatement(sql);
+			result = pstmst.executeQuery();
+		
             if (result.next()) {
             	 System.out.println("\n>> Logged in successfully! << ");
             	choidChoos();
@@ -66,17 +64,16 @@ public class Login {
 					break;
 				case 2: 
 					System.out.println("\n == ADD NEW PRODUCT RECORD == ");			
-					Scanner userCreate = new Scanner(System.in);
 					System.out.print("\nInput user id: ");
-					int userId = userCreate.nextInt();
+					int userId = userInput.nextInt();
 					System.out.print("Input product name: ");
-					String name = userCreate.next();
+					String name = userInput.next();
 					System.out.print("Input product quantity: ");
-					int quantity = userCreate.nextInt();
+					int quantity = userInput.nextInt();
 					System.out.print("Input product price: ");
-					String price = userCreate.next();
+					String price = userInput.next();
 					System.out.print("Input product category: ");
-					String category = userCreate.next();
+					String category = userInput.next();
 						product.setUserId(userId);
 						product.setName(name);
 						product.setQuantity(quantity);
@@ -86,15 +83,15 @@ public class Login {
 					break;
 				case 3: 
 					System.out.println("\n == UPDATE PRODUCT RECORD == ");
-					System.out.print("\nEnter your product id to update: ");
+						System.out.print("\nEnter your product id to update: ");
 				    int idProduct = userInput.nextInt();
-					System.out.print("Enter your new product name: ");
+						System.out.print("Enter your new product name: ");
 					String nameProduct = userInput.next();
-					System.out.print("Enter your new product quantity: ");
+						System.out.print("Enter your new product quantity: ");
 					int quantityProduct = userInput.nextInt();
-					System.out.print("Enter your new product price: ");
+						System.out.print("Enter your new product price: ");
 					String priceProduct = userInput.next();
-					System.out.print("Enter your new product category: ");
+						System.out.print("Enter your new product category: ");
 					String categoryProduct = userInput.next();
 						product.setProductId(idProduct);
 						product.setName(nameProduct);
@@ -106,14 +103,16 @@ public class Login {
 					break;
 				case 4: 
 					System.out.println("\n == DELETE PRODUCT RECORD == ");
-					System.out.print("\nInput product ID: ");
+						System.out.print("\nInput product ID: ");
 					int delete = userInput.nextInt();
+					
 					productManager.deleteProduct(delete);
 					break;
 				case 5: 
 					System.out.println("\n == FIND PRODUCT RECORD == ");
-				    System.out.print("\nInput product ID: ");
+				    	System.out.print("\nInput product ID: ");
 				    int id = userInput.nextInt();
+				    
 					if(productManager.findProduct(id) != null) {
 						System.out.println("\n>> Product found! <<");
 						System.out.println(productManager.findProduct(id));
@@ -124,9 +123,8 @@ public class Login {
 					break;
 				case 6: 
 					System.out.println("\n ==  SEARCH PRODUCT RECORD == ");
-					Scanner search = new Scanner(System.in);
 					System.out.print("\nEnter Your Product Name: ");
-					String nameSearch = search.nextLine();
+					String nameSearch = userInput.next();
 					if(productManager.searchProduct(nameSearch) != null) {
 						System.out.println("\n>> Product found! <<");
 						System.out.println(productManager.searchProduct(nameSearch));
@@ -138,7 +136,7 @@ public class Login {
 					System.out.println("\nInvalid input!");
 					break;
 			}
-			System.out.println("\nPress anykey to continue<Y/y>...");
+			System.out.print("\nPress anykey to continue<Y/y>...");
 			userPress = userInput.next().charAt(0); 
 		    if (userPress == 'Y' || userPress == 'y') {
 		    	showMeun();
@@ -157,19 +155,19 @@ public class Login {
 				switch(choice) {
 					case 1 : 
 						System.out.println("\n == REGISTER A NEW ACCOUNT==");
-						Scanner user = new Scanner(System.in);
-						System.out.print("Input the first name: ");
-						String firstName = user.nextLine();
-						System.out.print("Input the last name: ");
-						String lastName = user.nextLine();
-						System.out.print("Input the province: ");
-						String province = user.nextLine();
-						System.out.print("Input the phone number: ");
-						String phone = user.nextLine();
-						System.out.print("Input the email: ");
-						String email = user.nextLine();
-						System.out.print("Input the password: ");
-						String password = user.nextLine();
+							System.out.print("Input the first name: ");
+						String firstName = userInput.next();
+							System.out.print("Input the last name: ");
+						String lastName = userInput.next();
+							System.out.print("Input the province: ");
+						String province = userInput.next();
+							System.out.print("Input the phone number: ");
+						String phone = userInput.next();
+							System.out.print("Input the email: ");
+						String email = userInput.next();
+							System.out.print("Input the password: ");
+						String password = userInput.nextLine();
+						
 						userManager.addUser(firstName,lastName,province,phone,email,password);
 						break;
 					case 2 : 

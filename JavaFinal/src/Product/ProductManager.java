@@ -6,17 +6,16 @@ import java.util.*;
 
 public class ProductManager {
 	static Connection connection = null;
-	static Statement insertStatement = null;
-	static Statement selectStatement = null;
-	static Statement updateStatement = null;
 	static ResultSet result = null;
 	static PreparedStatement pstmst;
 	public List<Product> getAllProduct() throws ClassNotFoundException {
 		List<Product> productList = new ArrayList<Product>();
 		try {
 			connection = ConnectionUtil.getMyConnection();
-			 selectStatement = connection.createStatement();
-			 result = selectStatement.executeQuery("SELECT * FROM tbl_products");
+			String sql =  "SELECT * FROM tbl_products";
+			pstmst = connection.prepareStatement(sql);
+			result = pstmst.executeQuery();
+			
 				while(result.next()) {
 					int productId = result.getInt(1);
 					int userId = result.getInt(2);
@@ -29,6 +28,7 @@ public class ProductManager {
 					productList.add(product);
 	
 				}
+				
 			} catch (SQLException e) {
 				System.out.println("Connection failed!");
 			} finally {
@@ -41,12 +41,6 @@ public class ProductManager {
 				}
 			}
 			return productList;
-	}
-	
-	public void printCustomer(ArrayList<Product> products) {
-		for(Product product: products) {
-			System.out.println(product);
-		}
 	} 
 	
 	public Product findProduct(int id) throws ClassNotFoundException { 
@@ -64,10 +58,11 @@ public class ProductManager {
 				int quanity = result.getInt(4);
 				String price = result.getString(5);
 				String category = result.getString(6);
-				
+
 				product = new Product(productId, userId, name, quanity, price, category);
 
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,7 +114,7 @@ public class ProductManager {
     	String sql = "DELETE FROM tbl_products WHERE product_id=" + id;
     	pstmst = connection.prepareStatement(sql);
     	int rowEffect = pstmst.executeUpdate();
-    	System.out.println(">>\n Delete product successfully <<");
+    	System.out.println("\n>> Delete product successfully <<");
 	}
     
     public Product searchProduct(String namePro) throws ClassNotFoundException { 
