@@ -24,10 +24,8 @@ public class ProductManager {
 					int quanity = result.getInt(4);
 					String price = result.getString(5);
 					String category = result.getString(6);
-					String publicDate = result.getString(7);
-					String expireDate = result.getString(8);
 					
-					Product product = new Product(productId, userId, name, quanity, price, category, publicDate, expireDate);
+					Product product = new Product(productId, userId, name, quanity, price, category);
 					productList.add(product);
 	
 				}
@@ -66,10 +64,8 @@ public class ProductManager {
 				int quanity = result.getInt(4);
 				String price = result.getString(5);
 				String category = result.getString(6);
-				String publicDate = result.getString(7);
-				String expireDate = result.getString(8);
 				
-				product = new Product(productId, userId, name, quanity, price, category, publicDate, expireDate);
+				product = new Product(productId, userId, name, quanity, price, category);
 
 			}
 		} catch (SQLException e) {
@@ -105,7 +101,31 @@ public class ProductManager {
     	String sql = "DELETE FROM tbl_products WHERE product_id=" + id;
     	pstmst = connection.prepareStatement(sql);
     	int rowEffect = pstmst.executeUpdate();
-    	System.out.println(">> Delete product successfully <<");
+    	System.out.println(">>\n Delete product successfully <<");
+	}
+    
+    public Product searchProduct(String namePro) throws ClassNotFoundException { 
+		Product product = null;
+		try {
+			connection = ConnectionUtil.getMyConnection();
+			String sql =  "SELECT * FROM tbl_products WHERE name = '" + namePro + "'";
+			pstmst = connection.prepareStatement(sql);
+			result = pstmst.executeQuery();
+
+			while(result.next()) {
+				int productId = result.getInt(1);
+				int userId = result.getInt(2);
+				String name = result.getString(3);
+				int quanity = result.getInt(4);
+				String price = result.getString(5);
+				String category = result.getString(6);
+				product = new Product(productId, userId, name, quanity, price, category);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return product;
 	}
     
 }

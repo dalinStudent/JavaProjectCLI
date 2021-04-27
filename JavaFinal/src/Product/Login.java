@@ -67,7 +67,7 @@ public class Login {
 					System.out.println("\n == ADD NEW PRODUCT RECORD == ");
 					Scanner userCreate = new Scanner(System.in);
 				    
-					System.out.print("Input product name: ");
+					System.out.print("\nInput product name: ");
 					String name = userCreate.nextLine();
 					System.out.print("Input product price: ");
 					String price = userCreate.nextLine();
@@ -104,8 +104,15 @@ public class Login {
 					break;
 				case 6: 
 					System.out.println("\n ==  SEARCH PRODUCT RECORD == ");
-					
-					
+					Scanner search = new Scanner(System.in);
+					System.out.print("\nEnter Your Product Name: ");
+					String nameSearch = search.nextLine();
+					if(productManager.searchProduct(nameSearch) != null) {
+						System.out.println("\n>> Product found! <<");
+						System.out.println(productManager.searchProduct(nameSearch));
+					} else {
+						System.out.println("\nProduct record not found!");
+					}
 					break;
 				default: 
 					System.out.println("\nInvalid input!");

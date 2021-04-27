@@ -8,24 +8,20 @@ public class Product {
 	private int quantity;
 	private String price;
 	private String category;
-	private String publicDate;
-	private String expireDate;
 	
 	public Product() {
 		
 	}
-	public Product(int userId, String name, int quantity, String price, String category, String publicDate, String expireDate) {
+	public Product(int userId, String name, int quantity, String price, String category) {
 		super();
 		this.userId = userId;
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.category = category;
-		this.publicDate = publicDate;
-		this.expireDate = expireDate;
 	}
 	
-	public Product(int productId, int userId, String name, int quantity, String price, String category, String publicDate, String expireDate) {
+	public Product(int productId, int userId, String name, int quantity, String price, String category) {
 		super();
 		this.productId = productId;
 		this.userId = userId;
@@ -33,8 +29,6 @@ public class Product {
 		this.quantity = quantity;
 		this.price = price;
 		this.category = category;
-		this.publicDate = publicDate;
-		this.expireDate = expireDate;
 	}
 	
 	public int getProductId() {
@@ -85,28 +79,13 @@ public class Product {
 		this.category = category;
 	}
 
-	public String getPublicDate() {
-		return publicDate;
-	}
-
-	public void setPublicDate(String publicDate) {
-		this.publicDate = publicDate;
-	}
-
-	public String getExpireDate() {
-		return expireDate;
-	}
-
-	public void setExpireDate(String expireDate) {
-		this.expireDate = expireDate;
-	}
 	
 	@Override
 	public String toString() {
 		return "\n ----------------------------------------------------------------------------------------|"+
-			      "\n ProductId  UserId   Quantity  Price   Category   Public Date   Expire Date|"+
+			      "\n ProductId  UserId   Product Name    Quantity  Price   Category   |"+
 			      "\n ----------------------------------------------------------------------------------------| "+
-			      "\n|"+productId+ "          " +userId+"         "+quantity+"       "+price+"      "+category+"      "+publicDate+"      "+expireDate +
+			      "\n|"+productId+ "          " +userId+"         " +name+"         "+quantity+"       "+price+"      "+category+
 			       "\n ----------------------------------------------------------------------------------------|";
 			     
 	}
