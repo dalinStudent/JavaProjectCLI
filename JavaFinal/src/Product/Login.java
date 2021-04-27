@@ -65,19 +65,25 @@ public class Login {
 					break;
 				case 2: 
 					System.out.println("\n == ADD NEW PRODUCT RECORD == ");
+					Product product = new Product();
+					
 					Scanner userCreate = new Scanner(System.in);
-				    
-					System.out.print("\nInput product name: ");
-					String name = userCreate.nextLine();
-					System.out.print("Input product price: ");
-					String price = userCreate.nextLine();
-					System.out.print("Input product category: ");
-					String category = userCreate.nextLine();
+					System.out.print("\nInput user id: ");
+					int userId = userCreate.nextInt();
+					System.out.print("Input product name: ");
+					String name = userCreate.next();
 					System.out.print("Input product quantity: ");
 					int quantity = userCreate.nextInt();
-					System.out.print("Input user id: ");
-					int userId = userCreate.nextInt();
-					productManager.addProduct(userId, name, quantity, price, category);
+					System.out.print("Input product price: ");
+					String price = userCreate.next();
+					System.out.print("Input product category: ");
+					String category = userCreate.next();
+						product.setUserId(userId);
+						product.setName(name);
+						product.setQuantity(quantity);
+						product.setPrice(price);
+						product.setCategory(category);
+					productManager.addProduct(product);
 					break;
 				case 3: 
 					System.out.println("\n == UPDATE PRODUCT RECORD == ");

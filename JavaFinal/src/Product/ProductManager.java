@@ -75,15 +75,15 @@ public class ProductManager {
 		return product;
 	}
 	
-	public void addProduct(int userId, String name, int quantity, String price, String category) throws ClassNotFoundException, SQLException {
+	public void addProduct(Product product) throws ClassNotFoundException, SQLException {
 		connection = ConnectionUtil.getMyConnection();
 		String sql = "INSERT INTO tbl_products (user_id, name, quantity, price, category) VALUES(?,?,?,?,?)";
 		pstmst = connection.prepareStatement(sql);
-		pstmst.setInt(1, userId);
-	    pstmst.setString(2, name);
-	    pstmst.setInt(3, quantity);
-	    pstmst.setString(4, price);
-	    pstmst.setString(5, category);
+	    pstmst.setInt(1, product.getUserId());
+	    pstmst.setString(2, product.getName());
+	    pstmst.setInt(3, product.getQuantity());
+	    pstmst.setString(4, product.getPrice());
+	    pstmst.setString(5, product.getCategory());
 
 		 int data = pstmst.executeUpdate();
 	      if(data!=0){
