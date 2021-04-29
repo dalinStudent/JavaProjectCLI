@@ -85,7 +85,7 @@ public class ProductManager {
 	        System.out.println("\n>> Add product successfully <<"); 
 	      }
 	      else{
-	        System.out.println("\\n>> Add product unsuccessfull <<");
+	        System.out.println("\n>> Add product unsuccessfull <<");
 	      }
 	}
     public void updateProduct(Product product) throws ClassNotFoundException {
@@ -103,12 +103,13 @@ public class ProductManager {
 		    	System.out.println("\n>> Update product successfully <<"); 
 		    }
 		    else{
-		    	System.out.println("\\n>> Update product unsuccessfull <<");
+		    	System.out.println("\n>> Update product unsuccessfull <<");
 		    }
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	}
+    
     public void deleteProduct(int id) throws ClassNotFoundException, SQLException {
     	connection = ConnectionUtil.getMyConnection();
     	String sql = "DELETE FROM tbl_products WHERE product_id=" + id;

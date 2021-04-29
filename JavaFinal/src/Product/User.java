@@ -9,14 +9,24 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    
+    public User() {
+    	
+    }
     public User(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
 	}
+    public User(int id, String firstName, String lastName, String email, String phone, String province) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.province = province;
+		this.email = email;
+		this.phone = phone;
+	}
     
-    public User(String firstName, String lastName, String email, String password, String phone, String province) {
+	public User(String firstName, String lastName, String email, String password, String phone, String province) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -69,11 +79,6 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-    
-	
-    public String getMail() {
-        return email;
-    }
 
 	public String getPassword() {
         return password;
@@ -86,5 +91,14 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Override
+	public String toString() {
+		return "\n -------------------------------------------------------------------------|"+
+			      "\n First Name      Last Name       Email          Phone          Province   |"+
+			      "\n -------------------------------------------------------------------------|"+
+			      "\n| " +firstName+"          " +lastName+"          "+email+"   "+phone+"  "+province+
+			       "\n -------------------------------------------------------------------------|";
 	}
 }

@@ -11,6 +11,7 @@ public class Login {
 	static ProductManager productManager = new ProductManager();	
 	static UserManager userManager = new UserManager();
 	static Product product = new Product();
+	static User user = new User();
 	static Scanner userInput = new Scanner(System.in);
 	static char userPress;
 	
@@ -31,10 +32,10 @@ public class Login {
 		
             if (result.next()) {
             	 System.out.println("\n>> Logged in successfully! << ");
-            	choidChoos();
+            	 systemInfo();
             } else {
                 System.out.println(">> Incorrect username or password <<");
-                registerUser();
+                userInfo();
             }
 
             result.close();
@@ -46,7 +47,7 @@ public class Login {
         }
 	}
 	
-	public static void choidChoos() throws ClassNotFoundException, SQLException {
+	public static void systemInfo() throws ClassNotFoundException, SQLException {
 		showMeun();
 		int option;
 		do {
@@ -146,31 +147,85 @@ public class Login {
 		} while(option != 0);
 	}
 	
-	public static void registerUser() throws ClassNotFoundException {
+	public static void userInfo() throws ClassNotFoundException, SQLException {
 		System.out.println("1. Create an new account?");
-		System.out.println("2. Back to login");
+		System.out.println("2. View user detail");
+		System.out.println("3. Update user detail");
+		System.out.println("4. Delete user");
+		System.out.println("5. Back to login");
 		System.out.print("\nEnter your choice: ");
 		int choice = userInput.nextInt();
 		do {
 				switch(choice) {
 					case 1 : 
-						System.out.println("\n == REGISTER A NEW ACCOUNT==");
-							System.out.print("Input the first name: ");
+						System.out.println("\n == CREATE AN NEW ACCOUNT ==");
+							System.out.print("\nInput the first name: ");
 						String firstName = userInput.next();
 							System.out.print("Input the last name: ");
 						String lastName = userInput.next();
+							System.out.print("Input the email: ");
+						String email = userInput.next();
+							System.out.print("Input the password: ");
+						String password = userInput.next();
 							System.out.print("Input the province: ");
 						String province = userInput.next();
 							System.out.print("Input the phone number: ");
 						String phone = userInput.next();
-							System.out.print("Input the email: ");
-						String email = userInput.next();
-							System.out.print("Input the password: ");
-						String password = userInput.nextLine();
-						
-						userManager.addUser(firstName,lastName,province,phone,email,password);
+							
+							user.setFirstName(firstName);
+							user.setLastName(lastName);
+							user.setEmail(email);
+							user.setPassword(password);
+							user.setProvince(province);
+							user.setPhone(phone);
+						userManager.addUser(user);
 						break;
 					case 2 : 
+						System.out.println("\n == USER DETAIL INFORMATION == ");
+						System.out.print("\nInput user ID: ");
+					    int id = userInput.nextInt();
+					    
+							if(userManager.findUser(id) != null) {
+								System.out.println("\n>> User found! <<");
+								System.out.println(userManager.findUser(id));
+								login();
+							} else {
+								System.out.println("\nUser not found!");
+							}
+						break;
+					case 3 : 
+						System.out.println("\n == UPDATE USER DETAIL INFORMATION == ");
+						System.out.print("\nEnter your user id to update: ");
+					    int idUser = userInput.nextInt();
+							System.out.print("Enter your new first name: ");
+						String newFirstName = userInput.next();
+							System.out.print("Enter your new last name: ");
+						String newLastName = userInput.next();
+							System.out.print("Enter your new email address: ");
+						String newEmail = userInput.next();
+							System.out.print("Enter your new password: ");
+						String newPassword = userInput.next();
+							System.out.print("Enter your new phone number: ");
+						String newPhone = userInput.next();
+							System.out.print("Enter your new province: ");
+						String newProvince = userInput.next();
+							user.setId(idUser);
+							user.setFirstName(newFirstName);
+							user.setLastName(newLastName);
+							user.setEmail(newEmail);
+							user.setPassword(newPassword);
+							user.setPhone(newPhone);
+							user.setProvince(newProvince);
+						userManager.updateUser(user);
+						break;
+					case 4 : 
+						System.out.println("\n == DELETE USER INFORMATION == ");
+						System.out.print("\nInput product ID: ");
+						int userId = userInput.nextInt();
+						
+						userManager.deleteUser(userId);
+						break;
+					case 5 : 
 						login();
 						break;
 				}
